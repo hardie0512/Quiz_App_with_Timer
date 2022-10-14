@@ -1,3 +1,49 @@
+// setting cookie
+const setcookie = (name, value, exdays) => {
+    const d = new Date();
+    d.setTime(d.getTime() + 60 * 1000);
+    let expires = "expires" + d.toUTCString();
+    document.cookie = name + "=" + (value || " ") + ";" + expires + "; path=/";
+};
+
+// getting/retriving coookie
+const getCookie = (cname) => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+// checking whether cookie is present or not
+const checkCookie = () => {
+    console.log("hey");
+    let user = getCookie("username");
+    if (user != "") {
+        console.log("heyq1");
+        alert("Welcome Again " + user);
+    } else {
+        console.log("heyq11s");
+        user = prompt("Please Enter Your Name: ");
+        if (user != "" && user != null) {
+            setcookie("username", user, 30);
+        }
+    }
+};
+
+window.onload = () => {
+    //once window loaded
+    checkCookie();
+};
+
+
 //Start Section
 let start = document.querySelector("#start");
 
